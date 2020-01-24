@@ -1,3 +1,7 @@
+let inquirer = require("inquirer")
+
+
+
 function makeHTML(ghRes, userInput, ghstarsqueryURL) {
     return `<!DOCTYPE html>
     <html lang="en">
