@@ -1,8 +1,23 @@
-let inquirer = require("inquirer")
+const inquirer = require("inquirer");
+const Engineer = require("./Engineer");
+const Employee = require("./Employee");
+const Intern = require("./Intern"); 
+const Manager = require("./Manager");
+const fs = require("fs");
 
 
 
-function makeHTML(ghRes, userInput, ghstarsqueryURL) {
+function createTeam() {
+    this.employeeArray = [];
+    console.log("Let's start building your engineering team!");
+    return this.nameTeam();
+  };
+
+
+
+
+
+function makeHTML(employeesHTML, teamName) {
     return `<!DOCTYPE html>
     <html lang="en">
     
@@ -10,10 +25,10 @@ function makeHTML(ghRes, userInput, ghstarsqueryURL) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Deleloper Profile Generator</title>
+        <title>Team Generator Summary</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="index.js"></script>
+       
     
     </head>
     
