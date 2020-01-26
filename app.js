@@ -1,20 +1,170 @@
 const inquirer = require("inquirer");
 const Engineer = require("./Engineer");
-const Employee = require("./Employee");
-const Intern = require("./Intern"); 
+const Intern = require("./Intern");
 const Manager = require("./Manager");
 const fs = require("fs");
 
 
-
 function createTeam() {
     this.employeeArray = [];
-    console.log("Let's start building your engineering team!");
+    console.log("Let's build an engineering team!");
     return this.nameTeam();
-  };
+};
+createTeam()
 
 
+function nameTeam() {
+    return inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "teamName",
+                message: "What do you want your team name to be? (Only letters and number)",
 
+            }
+        ])
+
+        .then(val => {
+            this.teamName = val.teamName;
+            return this.createManager();
+        })
+}
+
+nameTeam()
+
+function createManager() {
+    return inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "employeeName",
+                message: "What is this manager's name?",
+            },
+            {
+                type: "input",
+                name: "employeeID",
+                message: "What is the manager's employee ID number?"
+            },
+            {
+                type: "input",
+                name: "employeeEmail",
+                message: "What is the employee's email?",
+            },
+            {
+                type: "input",
+                name: "officeNumber",
+                message: "What is the manager's office number?",
+            }
+        ])
+        .then(val => {
+            const newManager = new Manager(
+                val.employeeName,
+                val.employeeId,
+                val.employeeEmail,
+                val.officeNumber,
+            );
+            this.employeeArray.push(newManager);
+            return this.createEngineer();
+        });
+}
+
+createManager()
+
+function createEngineer() {
+    return inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "employeeName",
+                message: "What is this employee's name?",
+            },
+            {
+                type: "input",
+                name: "employeeID",
+                message: "What is this employee's ID number?",
+            },
+            {
+                type: "input",
+                name: "employeeEmail",
+                message: "What is the employee's email?",
+            },
+            {
+                type: "input",
+                name: "employeeGithub",
+                message: "What is this employee's GitHub username?",
+                validate: function (val) {
+                    return /[a-z1-9]/gi.test(val);
+                },
+            }
+        ])
+        .then(val => {
+            const newEngineer = new Engineer(
+                val.employeeName,
+                val.employeeId,
+                val.employeeEmail,
+                val.employeeGithub
+            );
+            this.employeeArray.push(newEngineer);
+            return this.askIfDone();
+        });
+}
+
+createEngineer()
+
+function createIntern() {
+    return inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "employeeName",
+                message: "What is this employee's name?",
+            },
+            {
+                type: "input",
+                name: "employeeID",
+                message: "What is this employee's ID number?",
+            },
+            {
+                type: "input",
+                name: "employeeEmail",
+                message: "What is the employee's email?",
+            },
+            {
+                type: "input",
+                name: "employeeSchool",
+                message: "What is the name of the intern's school?"
+            }, 
+        ])
+        .then(val => {
+                const newIntern = new Intern(
+                    val.employeeName,
+                    val.employeeId,
+                    val.employeeEmail,
+                    val.employeeSchool
+                );
+                this.employeeArray.push(newIntern);
+                return this.askIfDone();
+            });
+    
+};
+
+function askIfDone(){
+    return inquirer
+    .prompt([{
+        type: "list", 
+        name: "userDone", 
+        choices: ["yes", "no"]
+    }
+
+    ])
+    .then(val => {
+        if (val.userDone === "Yes") {
+          return this.completeTeam();
+        } else {
+          return this.getTitle();
+        }
+      });
+}
 
 
 function makeHTML(employeesHTML, teamName) {
@@ -98,13 +248,4 @@ function makeHTML(employeesHTML, teamName) {
     
     </html>`
 }
-  
-  Employee
-  
-  * name
-  * id
-  * title
-  * getName()
-  * getId()
-  * getEmail()
-  * getRole() // Returns 'Employee'
+
